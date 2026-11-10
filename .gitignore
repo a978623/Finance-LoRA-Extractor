@@ -1,0 +1,12 @@
+.venv/
+.hf-cache/
+.ruff_cache/
+__pycache__/
+*.py[cod]
+runs/
+data/generated/
+*.safetensors
+*.bin
+*.pt
+.env
+.env.*

@@ -1,0 +1,1633 @@
+{
+  "plan": {
+    "model": "Qwen/Qwen2.5-0.5B-Instruct",
+    "revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+    "prompt_version": "finance-extraction-v2",
+    "conditions": [
+      {
+        "name": "base",
+        "rank": null,
+        "size": null
+      },
+      {
+        "name": "r8-n256",
+        "rank": 8,
+        "size": 256
+      },
+      {
+        "name": "r4-n256",
+        "rank": 4,
+        "size": 256
+      },
+      {
+        "name": "r16-n256",
+        "rank": 16,
+        "size": 256
+      },
+      {
+        "name": "r8-n64",
+        "rank": 8,
+        "size": 64
+      },
+      {
+        "name": "r8-n512",
+        "rank": 8,
+        "size": 512
+      }
+    ],
+    "steps": 64,
+    "batch_size": 2,
+    "gradient_accumulation": 4,
+    "learning_rate": 0.0002,
+    "training_seed": 42,
+    "device_request": "cuda",
+    "prediction_batch": 16,
+    "max_new_tokens": 240,
+    "gradient_checkpointing": false,
+    "data_sha256": {
+      "train": "55a24cbe9b266b87a2a9078bbe65d685a44c00d0a63e7b8b84617546f0049da6",
+      "validation": "f7f9a943ade9714c8c9ea84fba7de4bad16e4718158a0b027bb21530d3a8a306",
+      "test": "ba0fc93c3e75ff25438f4f5aa6665a8979433d71fdbf34c92f0ff7ac31fa6b73",
+      "stress": "93b23c868103fcaaf16c47d73eddc10290df0008e18ffb1efbc611c2ccac614b"
+    },
+    "code_sha256": {
+      "experiment.py": "8ad8d1c2e861b394ea96b4cdce6545b688d72cc066a6f07b85bdd4de7bfa3581",
+      "modeling.py": "04a936f2205b99dbdf4a92595061aa81b03a44dd631920f5cd6cab642734a308",
+      "train.py": "8fa62ecf64e30b6a539e1374769f311d83c32a5131736b1f6f7c2a5541e06c25",
+      "predict.py": "cb609398cb83aec74fa4b5eea442811bb73ce879587f694f1692a5190b6f7243",
+      "evaluate.py": "b147690734ad07a16914ec137c12859f7d19d7a81624b3e148bae940117a019a"
+    },
+    "reused_adapter_sha256": {
+      "r8-n256": {
+        "metadata.json": "feed2e2a30a7cac054a36d38f929ed34584e2c66d9899befac5f8da01963c96a",
+        "adapter_config.json": "28bb2a021747ab6c66c291b916578c0b28fdd81aa2f6745efa236ebe663c0097",
+        "adapter_model.safetensors": "2b76bed399e1bd1c8a9646c7c098616d9ca15a23c7066983f6a77bf06fc324bc"
+      },
+      "r4-n256": {
+        "metadata.json": "204356a0208dacd0611016d8ca24e2a70b348a5245a656bc4de092c34bcafe1c",
+        "adapter_config.json": "53f4c9f01dfee7dedb8dee3e88c68f72a421b8a28a7433c58b4243c0d625fa9f",
+        "adapter_model.safetensors": "9db813f48616eb4f4e1d097e6b01ab011880c38419a9306f4c4e27711617f059"
+      },
+      "r16-n256": {
+        "metadata.json": "7df0b5859e6c0190f07507921f943eb2e207ea8c3299023d8e93bb949a88daaf",
+        "adapter_config.json": "42c1d916d60a43ab86b970bde082ad76094d7c781e4d831d008cac3f82dc6833",
+        "adapter_model.safetensors": "258af6f6e3366933ba773bdd4521c18be6a554ee01549bf27ad6cff7a80d99bf"
+      },
+      "r8-n64": {
+        "metadata.json": "eac59753bc9c25b92e844ffd3119fced0fa384ba4918c363bde1c298ad45e026",
+        "adapter_config.json": "7eec51eb6a4e291571084189bd0bd9f9e9af19b9668ecbef49abd5a6409c3a5a",
+        "adapter_model.safetensors": "c10552ca8dcb727f4e0d4b19786a08f08879979258a1fd66edde2442b2ff08c3"
+      },
+      "r8-n512": {
+        "metadata.json": "ae85e948620961c998d45b3df77442749f8807f64a5538f164fe474ea5387629",
+        "adapter_config.json": "0953d4fca26f817f404d85f66e0c98e41e87b598c6a7cf267c979f2281a588b0",
+        "adapter_model.safetensors": "a05b42e6aa076defa6a531a71478d841a8eb419125885c38ca83e45089aa23d0"
+      }
+    },
+    "runtime": {
+      "python": "3.11.15",
+      "torch": "2.13.0+cu130",
+      "transformers": "4.57.6",
+      "peft": "0.18.0",
+      "accelerate": "1.12.0"
+    }
+  },
+  "conditions": {
+    "base": {
+      "training": null,
+      "prediction_sha256": "633126e63d9db8ef6956e00a5bc79d11a2267d0c4cbd964789d7abccec1eaaa3",
+      "inference": {
+        "wall_seconds": 81.08896189974621
+      },
+      "metrics": {
+        "test": {
+          "sample_count": 128,
+          "valid_json_rate": 0.9921875,
+          "valid_schema_rate": 0.15625,
+          "exact_match": 0.0234375,
+          "field_accuracy": {
+            "company_name": 0.1484375,
+            "revenue": 0.15625,
+            "net_profit": 0.140625,
+            "risks": 0.046875,
+            "operating_changes": 0.1015625,
+            "key_metrics": 0.0859375
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 61,
+              "fp": 45,
+              "fn": 453,
+              "precision": 0.5754716981132075,
+              "recall": 0.11867704280155641,
+              "f1": 0.1967741935483871
+            },
+            "risks": {
+              "tp": 16,
+              "fp": 19,
+              "fn": 133,
+              "precision": 0.45714285714285713,
+              "recall": 0.10738255033557047,
+              "f1": 0.17391304347826086
+            },
+            "operating_changes": {
+              "tp": 22,
+              "fp": 8,
+              "fn": 125,
+              "precision": 0.7333333333333333,
+              "recall": 0.14965986394557823,
+              "f1": 0.24858757062146894
+            },
+            "key_metrics": {
+              "tp": 23,
+              "fp": 18,
+              "fn": 195,
+              "precision": 0.5609756097560976,
+              "recall": 0.10550458715596331,
+              "f1": 0.1776061776061776
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 37,
+              "eligible": 230,
+              "accuracy": 0.1608695652173913
+            },
+            "revenue": {
+              "correct": 19,
+              "eligible": 113,
+              "accuracy": 0.168141592920354
+            },
+            "net_profit": {
+              "correct": 18,
+              "eligible": 117,
+              "accuracy": 0.15384615384615385
+            }
+          },
+          "hallucination": {
+            "rate": 0.7777777777777778,
+            "hallucinated": 7,
+            "eligible": 9,
+            "invalid_schema_excluded": 91
+          },
+          "missing": {
+            "rate": 0.8353293413173652,
+            "missing": 558,
+            "eligible": 668
+          }
+        },
+        "stress": {
+          "sample_count": 48,
+          "valid_json_rate": 1.0,
+          "valid_schema_rate": 0.0,
+          "exact_match": 0.0,
+          "field_accuracy": {
+            "company_name": 0.0,
+            "revenue": 0.0,
+            "net_profit": 0.0,
+            "risks": 0.0,
+            "operating_changes": 0.0,
+            "key_metrics": 0.0
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 174,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "risks": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 50,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "operating_changes": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 59,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "key_metrics": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 65,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 0,
+              "eligible": 76,
+              "accuracy": 0.0
+            },
+            "revenue": {
+              "correct": 0,
+              "eligible": 36,
+              "accuracy": 0.0
+            },
+            "net_profit": {
+              "correct": 0,
+              "eligible": 40,
+              "accuracy": 0.0
+            }
+          },
+          "hallucination": {
+            "rate": null,
+            "hallucinated": 0,
+            "eligible": 0,
+            "invalid_schema_excluded": 61
+          },
+          "missing": {
+            "rate": 1.0,
+            "missing": 227,
+            "eligible": 227
+          }
+        }
+      }
+    },
+    "r8-n256": {
+      "training": {
+        "model": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "prompt_version": "finance-extraction-v2",
+        "data_file": "data\\synthetic-v1\\train.jsonl",
+        "sample_prefix_sha256": "1b7ee54ada2b5da394014414753fca3d67279ef75c416c836c10e4fcc26bdaca",
+        "rank": 8,
+        "lora_alpha": 16,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj",
+          "gate_proj",
+          "up_proj",
+          "down_proj"
+        ],
+        "size": 256,
+        "seed": 42,
+        "steps": 64,
+        "warmup_steps": 6,
+        "batch_size": 2,
+        "gradient_accumulation": 4,
+        "effective_batch_size": 8,
+        "training_example_draws": 512,
+        "unique_training_examples_seen": 256,
+        "max_length": 1024,
+        "max_observed_length": 437,
+        "learning_rate": 0.0002,
+        "gradient_checkpointing": false,
+        "trainable_parameters": 4399104,
+        "total_parameters": 498431872,
+        "train_seconds": 57.31759050022811,
+        "train_tokens": 190726,
+        "supervised_tokens": 42864,
+        "peak_gpu_memory_mib": 3828.95263671875,
+        "peak_gpu_reserved_mib": 6064.0,
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+        "dtype": "bfloat16",
+        "loss_per_update": [
+          0.15326109893562256,
+          0.1493923848025837,
+          0.21627576423413825,
+          0.13469567690370543,
+          0.07750107080508502,
+          0.04850588976767672,
+          0.06278048001802884,
+          0.029631568875375273,
+          0.013162784524016327,
+          0.026325419848327158,
+          0.038696755436146896,
+          0.019423763350685044,
+          0.017760965473624924,
+          0.015730958306387568,
+          0.009069330401848279,
+          0.009836622226385422,
+          0.01514721943781926,
+          0.01055505722547976,
+          0.007477322904256502,
+          0.0028071822075361615,
+          0.004597671429316203,
+          0.004939535320205177,
+          0.0033460805598447504,
+          0.003325457694469721,
+          0.003572625878416462,
+          0.002066355918098417,
+          0.003643044415333576,
+          0.001053940188394834,
+          0.0017059357727275176,
+          0.0005939687066935054,
+          0.0009432534856688766,
+          0.035197611499264765,
+          0.008731417595201237,
+          0.0003580902813207125,
+          0.000931217379513241,
+          0.0003979404289753009,
+          0.0003321849541857063,
+          0.0003310652990495005,
+          0.00041999393387844687,
+          0.00037164497992088057,
+          0.000588945944511766,
+          0.0006285733617896423,
+          0.0003328982655328649,
+          0.0004685736046387599,
+          0.0005230061213175455,
+          0.0006778224642518201,
+          0.00048553594791820285,
+          0.0003945494348975434,
+          0.0004129166419976931,
+          0.00048156208523224395,
+          0.00041892260810493155,
+          0.00030586617954430126,
+          0.0002809158859797466,
+          0.0003900505526883557,
+          0.0005219431922716252,
+          0.0005222560389886928,
+          0.0004909684774266389,
+          0.000326619421643608,
+          0.00039250104670311996,
+          0.0002312844128985154,
+          0.00029183896837261435,
+          0.0003191760795957902,
+          0.0003864651284710101,
+          0.0003275740976232624
+        ],
+        "finished_at_utc": "2026-11-10T12:28:14.559591+00:00",
+        "versions": {
+          "torch": "2.13.0+cu130",
+          "transformers": "4.57.6",
+          "peft": "0.18.0"
+        }
+      },
+      "prediction_sha256": "5843dbe2bbe5c800ef5afa8c079263f366b6705579fc807ee966238e201600bf",
+      "inference": {
+        "wall_seconds": 103.80383340036497
+      },
+      "metrics": {
+        "test": {
+          "sample_count": 128,
+          "valid_json_rate": 1.0,
+          "valid_schema_rate": 1.0,
+          "exact_match": 1.0,
+          "field_accuracy": {
+            "company_name": 1.0,
+            "revenue": 1.0,
+            "net_profit": 1.0,
+            "risks": 1.0,
+            "operating_changes": 1.0,
+            "key_metrics": 1.0
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 514,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "risks": {
+              "tp": 149,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "operating_changes": {
+              "tp": 147,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "key_metrics": {
+              "tp": 218,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 230,
+              "eligible": 230,
+              "accuracy": 1.0
+            },
+            "revenue": {
+              "correct": 113,
+              "eligible": 113,
+              "accuracy": 1.0
+            },
+            "net_profit": {
+              "correct": 117,
+              "eligible": 117,
+              "accuracy": 1.0
+            }
+          },
+          "hallucination": {
+            "rate": 0.0,
+            "hallucinated": 0,
+            "eligible": 100,
+            "invalid_schema_excluded": 0
+          },
+          "missing": {
+            "rate": 0.0,
+            "missing": 0,
+            "eligible": 668
+          }
+        },
+        "stress": {
+          "sample_count": 48,
+          "valid_json_rate": 0.9791666666666666,
+          "valid_schema_rate": 0.9583333333333334,
+          "exact_match": 0.2708333333333333,
+          "field_accuracy": {
+            "company_name": 0.8125,
+            "revenue": 0.625,
+            "net_profit": 0.6041666666666666,
+            "risks": 0.4583333333333333,
+            "operating_changes": 0.5,
+            "key_metrics": 0.6875
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 117,
+              "fp": 105,
+              "fn": 57,
+              "precision": 0.527027027027027,
+              "recall": 0.6724137931034483,
+              "f1": 0.5909090909090909
+            },
+            "risks": {
+              "tp": 31,
+              "fp": 48,
+              "fn": 19,
+              "precision": 0.3924050632911392,
+              "recall": 0.62,
+              "f1": 0.4806201550387597
+            },
+            "operating_changes": {
+              "tp": 34,
+              "fp": 41,
+              "fn": 25,
+              "precision": 0.4533333333333333,
+              "recall": 0.576271186440678,
+              "f1": 0.5074626865671642
+            },
+            "key_metrics": {
+              "tp": 52,
+              "fp": 16,
+              "fn": 13,
+              "precision": 0.7647058823529411,
+              "recall": 0.8,
+              "f1": 0.7819548872180451
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 53,
+              "eligible": 76,
+              "accuracy": 0.6973684210526315
+            },
+            "revenue": {
+              "correct": 27,
+              "eligible": 36,
+              "accuracy": 0.75
+            },
+            "net_profit": {
+              "correct": 26,
+              "eligible": 40,
+              "accuracy": 0.65
+            }
+          },
+          "hallucination": {
+            "rate": 0.5283018867924528,
+            "hallucinated": 28,
+            "eligible": 53,
+            "invalid_schema_excluded": 8
+          },
+          "missing": {
+            "rate": 0.02643171806167401,
+            "missing": 6,
+            "eligible": 227
+          }
+        }
+      }
+    },
+    "r4-n256": {
+      "training": {
+        "model": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "prompt_version": "finance-extraction-v2",
+        "data_file": "data\\synthetic-v1\\train.jsonl",
+        "sample_prefix_sha256": "1b7ee54ada2b5da394014414753fca3d67279ef75c416c836c10e4fcc26bdaca",
+        "rank": 4,
+        "lora_alpha": 8,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj",
+          "gate_proj",
+          "up_proj",
+          "down_proj"
+        ],
+        "size": 256,
+        "seed": 42,
+        "steps": 64,
+        "warmup_steps": 6,
+        "batch_size": 2,
+        "gradient_accumulation": 4,
+        "effective_batch_size": 8,
+        "training_example_draws": 512,
+        "unique_training_examples_seen": 256,
+        "max_length": 1024,
+        "max_observed_length": 437,
+        "learning_rate": 0.0002,
+        "gradient_checkpointing": false,
+        "trainable_parameters": 2199552,
+        "total_parameters": 496232320,
+        "train_seconds": 60.04062710003927,
+        "train_tokens": 190726,
+        "supervised_tokens": 42864,
+        "peak_gpu_memory_mib": 3793.25732421875,
+        "peak_gpu_reserved_mib": 6022.0,
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+        "dtype": "bfloat16",
+        "loss_per_update": [
+          0.15326109893562256,
+          0.1493923848025837,
+          0.22071626654081938,
+          0.1603840536577063,
+          0.11606100278022961,
+          0.07026612514688406,
+          0.09139254056490384,
+          0.03593172742463269,
+          0.014640819895398486,
+          0.043373084030987136,
+          0.06148491982008596,
+          0.04861543674280148,
+          0.04410167194914933,
+          0.02369178814834423,
+          0.019698739211402902,
+          0.020078851852887943,
+          0.021678011967585637,
+          0.012215441047548395,
+          0.015489044129941468,
+          0.004904929841502329,
+          0.02119911988576253,
+          0.012454863362664345,
+          0.012695323509227318,
+          0.005384772613845665,
+          0.010681044908217441,
+          0.0029250784152226044,
+          0.003153311665153241,
+          0.003486927241495211,
+          0.0036914148751427144,
+          0.0022512151053576475,
+          0.004764430188902334,
+          0.026191639153922017,
+          0.0023042832969859908,
+          0.0016454811387997177,
+          0.0019009879657200404,
+          0.0014123554604175764,
+          0.001175602219697368,
+          0.0009955125470315256,
+          0.0007980064167613872,
+          0.0009227535193990391,
+          0.0013550173507895092,
+          0.0022398356613980977,
+          0.0007987478307185282,
+          0.0008522989330710946,
+          0.00126254849963718,
+          0.0009125305127493943,
+          0.0017753980752360614,
+          0.0006974992481456406,
+          0.0008753923039451288,
+          0.0008192028501249861,
+          0.0005801817082852261,
+          0.0004570803915460904,
+          0.00042286354266566993,
+          0.0008145089432403078,
+          0.0006946586510714363,
+          0.0006393475245825852,
+          0.0008279514805781084,
+          0.0008456721491326776,
+          0.0005537639757630172,
+          0.00036409136496092144,
+          0.00044618252307008214,
+          0.000978848911861685,
+          0.0005762444806209147,
+          0.0006163944455029925
+        ],
+        "finished_at_utc": "2026-11-10T12:31:16.843504+00:00",
+        "versions": {
+          "torch": "2.13.0+cu130",
+          "transformers": "4.57.6",
+          "peft": "0.18.0"
+        }
+      },
+      "prediction_sha256": "a9efe1d1d26c893e3bc3193412f274f1de0c6e40b548df8a72226800cee83508",
+      "inference": {
+        "wall_seconds": 106.60739029990509
+      },
+      "metrics": {
+        "test": {
+          "sample_count": 128,
+          "valid_json_rate": 0.9921875,
+          "valid_schema_rate": 0.9921875,
+          "exact_match": 0.9921875,
+          "field_accuracy": {
+            "company_name": 0.9921875,
+            "revenue": 0.9921875,
+            "net_profit": 0.9921875,
+            "risks": 0.9921875,
+            "operating_changes": 0.9921875,
+            "key_metrics": 0.9921875
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 509,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.9902723735408561,
+              "f1": 0.9951124144672532
+            },
+            "risks": {
+              "tp": 147,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.9865771812080537,
+              "f1": 0.9932432432432432
+            },
+            "operating_changes": {
+              "tp": 145,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.9863945578231292,
+              "f1": 0.9931506849315068
+            },
+            "key_metrics": {
+              "tp": 217,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.9954128440366973,
+              "f1": 0.9977011494252873
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 228,
+              "eligible": 230,
+              "accuracy": 0.991304347826087
+            },
+            "revenue": {
+              "correct": 112,
+              "eligible": 113,
+              "accuracy": 0.9911504424778761
+            },
+            "net_profit": {
+              "correct": 116,
+              "eligible": 117,
+              "accuracy": 0.9914529914529915
+            }
+          },
+          "hallucination": {
+            "rate": 0.0,
+            "hallucinated": 0,
+            "eligible": 100,
+            "invalid_schema_excluded": 0
+          },
+          "missing": {
+            "rate": 0.008982035928143712,
+            "missing": 6,
+            "eligible": 668
+          }
+        },
+        "stress": {
+          "sample_count": 48,
+          "valid_json_rate": 1.0,
+          "valid_schema_rate": 0.9375,
+          "exact_match": 0.10416666666666667,
+          "field_accuracy": {
+            "company_name": 0.6875,
+            "revenue": 0.6041666666666666,
+            "net_profit": 0.6041666666666666,
+            "risks": 0.4166666666666667,
+            "operating_changes": 0.5416666666666666,
+            "key_metrics": 0.4583333333333333
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 109,
+              "fp": 107,
+              "fn": 65,
+              "precision": 0.5046296296296297,
+              "recall": 0.6264367816091954,
+              "f1": 0.558974358974359
+            },
+            "risks": {
+              "tp": 29,
+              "fp": 45,
+              "fn": 21,
+              "precision": 0.3918918918918919,
+              "recall": 0.58,
+              "f1": 0.46774193548387094
+            },
+            "operating_changes": {
+              "tp": 35,
+              "fp": 34,
+              "fn": 24,
+              "precision": 0.5072463768115942,
+              "recall": 0.5932203389830508,
+              "f1": 0.546875
+            },
+            "key_metrics": {
+              "tp": 45,
+              "fp": 28,
+              "fn": 20,
+              "precision": 0.6164383561643836,
+              "recall": 0.6923076923076923,
+              "f1": 0.6521739130434783
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 50,
+              "eligible": 76,
+              "accuracy": 0.6578947368421053
+            },
+            "revenue": {
+              "correct": 25,
+              "eligible": 36,
+              "accuracy": 0.6944444444444444
+            },
+            "net_profit": {
+              "correct": 25,
+              "eligible": 40,
+              "accuracy": 0.625
+            }
+          },
+          "hallucination": {
+            "rate": 0.6379310344827587,
+            "hallucinated": 37,
+            "eligible": 58,
+            "invalid_schema_excluded": 3
+          },
+          "missing": {
+            "rate": 0.06607929515418502,
+            "missing": 15,
+            "eligible": 227
+          }
+        }
+      }
+    },
+    "r16-n256": {
+      "training": {
+        "model": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "prompt_version": "finance-extraction-v2",
+        "data_file": "data\\synthetic-v1\\train.jsonl",
+        "sample_prefix_sha256": "1b7ee54ada2b5da394014414753fca3d67279ef75c416c836c10e4fcc26bdaca",
+        "rank": 16,
+        "lora_alpha": 32,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj",
+          "gate_proj",
+          "up_proj",
+          "down_proj"
+        ],
+        "size": 256,
+        "seed": 42,
+        "steps": 64,
+        "warmup_steps": 6,
+        "batch_size": 2,
+        "gradient_accumulation": 4,
+        "effective_batch_size": 8,
+        "training_example_draws": 512,
+        "unique_training_examples_seen": 256,
+        "max_length": 1024,
+        "max_observed_length": 437,
+        "learning_rate": 0.0002,
+        "gradient_checkpointing": false,
+        "trainable_parameters": 8798208,
+        "total_parameters": 502830976,
+        "train_seconds": 58.87911329977214,
+        "train_tokens": 190726,
+        "supervised_tokens": 42864,
+        "peak_gpu_memory_mib": 3900.42529296875,
+        "peak_gpu_reserved_mib": 6144.0,
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+        "dtype": "bfloat16",
+        "loss_per_update": [
+          0.15326109893562256,
+          0.1493923848025837,
+          0.20026426908502168,
+          0.09663819304064498,
+          0.048992554346720375,
+          0.03863139237095519,
+          0.044374151963454025,
+          0.020340776512890055,
+          0.008303166090787113,
+          0.015791387065475535,
+          0.022086257097489407,
+          0.007474835556332428,
+          0.016383186488236286,
+          0.006597782118936603,
+          0.005137622595790878,
+          0.005963800865926861,
+          0.0024354118567246658,
+          0.012701569367546552,
+          0.0043065287579612315,
+          0.0025614623943071685,
+          0.0069173320134480795,
+          0.0021417993027091826,
+          0.0018414413774168335,
+          0.00963940756253038,
+          0.0016198172981356396,
+          0.0006438960162696238,
+          0.0004715053300582067,
+          0.00030477157194320467,
+          0.0002687792567645802,
+          0.0003952309182641928,
+          0.0004746370653407393,
+          0.009529937825839248,
+          0.00031513796680292505,
+          0.0013732862074617219,
+          0.0003857998000014396,
+          0.0003722943126773223,
+          0.0003442449032226739,
+          0.000709362183847735,
+          0.00041140476514024346,
+          0.00048448888112011376,
+          0.00031986694932872243,
+          0.0004797132775252563,
+          0.0002890787506831511,
+          0.0002591428193417224,
+          0.0004309144726505986,
+          0.00031686069656021985,
+          0.0003115827637600761,
+          0.0002999014338885231,
+          0.0003439903632974176,
+          0.00032766129014678814,
+          0.00023175567976440754,
+          0.00020279473669472195,
+          0.00019331451183483925,
+          0.00025703222120204987,
+          0.00032446910353267893,
+          0.0002666346115779273,
+          0.00021425525670213573,
+          0.00023085724206179428,
+          0.00022358788995985773,
+          0.00015100179926345222,
+          0.0002446158415516891,
+          0.0002633921881729269,
+          0.0002173732948964476,
+          0.0003066458337786699
+        ],
+        "finished_at_utc": "2026-11-10T12:34:20.494286+00:00",
+        "versions": {
+          "torch": "2.13.0+cu130",
+          "transformers": "4.57.6",
+          "peft": "0.18.0"
+        }
+      },
+      "prediction_sha256": "021a60c10df3730ddd407c8020fcdf248f99266ef2f90f5d904ecbde02fed4f3",
+      "inference": {
+        "wall_seconds": 118.91608009999618
+      },
+      "metrics": {
+        "test": {
+          "sample_count": 128,
+          "valid_json_rate": 1.0,
+          "valid_schema_rate": 1.0,
+          "exact_match": 1.0,
+          "field_accuracy": {
+            "company_name": 1.0,
+            "revenue": 1.0,
+            "net_profit": 1.0,
+            "risks": 1.0,
+            "operating_changes": 1.0,
+            "key_metrics": 1.0
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 514,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "risks": {
+              "tp": 149,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "operating_changes": {
+              "tp": 147,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "key_metrics": {
+              "tp": 218,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 230,
+              "eligible": 230,
+              "accuracy": 1.0
+            },
+            "revenue": {
+              "correct": 113,
+              "eligible": 113,
+              "accuracy": 1.0
+            },
+            "net_profit": {
+              "correct": 117,
+              "eligible": 117,
+              "accuracy": 1.0
+            }
+          },
+          "hallucination": {
+            "rate": 0.0,
+            "hallucinated": 0,
+            "eligible": 100,
+            "invalid_schema_excluded": 0
+          },
+          "missing": {
+            "rate": 0.0,
+            "missing": 0,
+            "eligible": 668
+          }
+        },
+        "stress": {
+          "sample_count": 48,
+          "valid_json_rate": 0.9791666666666666,
+          "valid_schema_rate": 0.8333333333333334,
+          "exact_match": 0.1875,
+          "field_accuracy": {
+            "company_name": 0.6875,
+            "revenue": 0.5416666666666666,
+            "net_profit": 0.4791666666666667,
+            "risks": 0.3958333333333333,
+            "operating_changes": 0.4166666666666667,
+            "key_metrics": 0.4583333333333333
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 99,
+              "fp": 133,
+              "fn": 75,
+              "precision": 0.4267241379310345,
+              "recall": 0.5689655172413793,
+              "f1": 0.4876847290640394
+            },
+            "risks": {
+              "tp": 30,
+              "fp": 50,
+              "fn": 20,
+              "precision": 0.375,
+              "recall": 0.6,
+              "f1": 0.46153846153846156
+            },
+            "operating_changes": {
+              "tp": 31,
+              "fp": 48,
+              "fn": 28,
+              "precision": 0.3924050632911392,
+              "recall": 0.5254237288135594,
+              "f1": 0.4492753623188406
+            },
+            "key_metrics": {
+              "tp": 38,
+              "fp": 35,
+              "fn": 27,
+              "precision": 0.5205479452054794,
+              "recall": 0.5846153846153846,
+              "f1": 0.5507246376811594
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 43,
+              "eligible": 76,
+              "accuracy": 0.5657894736842105
+            },
+            "revenue": {
+              "correct": 23,
+              "eligible": 36,
+              "accuracy": 0.6388888888888888
+            },
+            "net_profit": {
+              "correct": 20,
+              "eligible": 40,
+              "accuracy": 0.5
+            }
+          },
+          "hallucination": {
+            "rate": 0.5384615384615384,
+            "hallucinated": 28,
+            "eligible": 52,
+            "invalid_schema_excluded": 9
+          },
+          "missing": {
+            "rate": 0.18502202643171806,
+            "missing": 42,
+            "eligible": 227
+          }
+        }
+      }
+    },
+    "r8-n64": {
+      "training": {
+        "model": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "prompt_version": "finance-extraction-v2",
+        "data_file": "data\\synthetic-v1\\train.jsonl",
+        "sample_prefix_sha256": "c1ec4d9e4df42ab00f1fa5c979b7f1613308d76023bdbf87aeba080648adc7c6",
+        "rank": 8,
+        "lora_alpha": 16,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj",
+          "gate_proj",
+          "up_proj",
+          "down_proj"
+        ],
+        "size": 64,
+        "seed": 42,
+        "steps": 64,
+        "warmup_steps": 6,
+        "batch_size": 2,
+        "gradient_accumulation": 4,
+        "effective_batch_size": 8,
+        "training_example_draws": 512,
+        "unique_training_examples_seen": 64,
+        "max_length": 1024,
+        "max_observed_length": 428,
+        "learning_rate": 0.0002,
+        "gradient_checkpointing": false,
+        "trainable_parameters": 4399104,
+        "total_parameters": 498431872,
+        "train_seconds": 59.770470099989325,
+        "train_tokens": 189864,
+        "supervised_tokens": 42232,
+        "peak_gpu_memory_mib": 3515.6328125,
+        "peak_gpu_reserved_mib": 4496.0,
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+        "dtype": "bfloat16",
+        "loss_per_update": [
+          0.19218772605613427,
+          0.1969928741455078,
+          0.1660202620272151,
+          0.10539462361825334,
+          0.07559784654816393,
+          0.0668238880478333,
+          0.06308606195111646,
+          0.03248352918796197,
+          0.030915987045369683,
+          0.02045148465691543,
+          0.021621302307629195,
+          0.01817863674487098,
+          0.006430885015259788,
+          0.008596926650764773,
+          0.018867964853292955,
+          0.005068948595586393,
+          0.009892610001237425,
+          0.004777206122971196,
+          0.0018535314893429996,
+          0.0061581818114188605,
+          0.003763138690841532,
+          0.001959832566125052,
+          0.0009340086846954021,
+          0.004589468663133036,
+          0.000921495206851507,
+          0.00040659867502209707,
+          0.0017951468091381333,
+          0.000917280510020933,
+          0.0019768256795370327,
+          0.00039251007105969735,
+          0.0004966150363677829,
+          0.0008727638784024875,
+          0.0004582334063863217,
+          0.0008523765298509106,
+          0.00032215052072428254,
+          0.0005001168419085935,
+          0.00029186379382341635,
+          0.00039528734093412346,
+          0.0003181540998738816,
+          0.00024888660226549423,
+          0.00030249305920608354,
+          0.0002608416721349307,
+          0.0003233490777867181,
+          0.0002534771901729815,
+          0.00023513323004131523,
+          0.00025712901702450955,
+          0.00025420611546862694,
+          0.00023908793558309108,
+          0.00029083362226627605,
+          0.000226894802436596,
+          0.00020787811779475712,
+          0.00026875895845306503,
+          0.00019382430064493242,
+          0.0001942247543321059,
+          0.00020576232499248346,
+          0.00024047374641627408,
+          0.00018652084223721007,
+          0.0001944526070688927,
+          0.0002095618095443147,
+          0.00021562521714110707,
+          0.0002468637773923785,
+          0.00020281997349885133,
+          0.00021394553362943564,
+          0.00020552064627631718
+        ],
+        "finished_at_utc": "2026-11-10T12:37:35.861166+00:00",
+        "versions": {
+          "torch": "2.13.0+cu130",
+          "transformers": "4.57.6",
+          "peft": "0.18.0"
+        }
+      },
+      "prediction_sha256": "4b7fabda577db0cdc3b8804a364234134cbe2c23af9eefebb101c8aa1f3ae726",
+      "inference": {
+        "wall_seconds": 107.08098730025813
+      },
+      "metrics": {
+        "test": {
+          "sample_count": 128,
+          "valid_json_rate": 0.9921875,
+          "valid_schema_rate": 0.9921875,
+          "exact_match": 0.9453125,
+          "field_accuracy": {
+            "company_name": 0.9765625,
+            "revenue": 0.9921875,
+            "net_profit": 0.9609375,
+            "risks": 0.9921875,
+            "operating_changes": 0.9921875,
+            "key_metrics": 0.9921875
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 509,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.9902723735408561,
+              "f1": 0.9951124144672532
+            },
+            "risks": {
+              "tp": 147,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.9865771812080537,
+              "f1": 0.9932432432432432
+            },
+            "operating_changes": {
+              "tp": 145,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.9863945578231292,
+              "f1": 0.9931506849315068
+            },
+            "key_metrics": {
+              "tp": 217,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.9954128440366973,
+              "f1": 0.9977011494252873
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 228,
+              "eligible": 230,
+              "accuracy": 0.991304347826087
+            },
+            "revenue": {
+              "correct": 112,
+              "eligible": 113,
+              "accuracy": 0.9911504424778761
+            },
+            "net_profit": {
+              "correct": 116,
+              "eligible": 117,
+              "accuracy": 0.9914529914529915
+            }
+          },
+          "hallucination": {
+            "rate": 0.04,
+            "hallucinated": 4,
+            "eligible": 100,
+            "invalid_schema_excluded": 0
+          },
+          "missing": {
+            "rate": 0.008982035928143712,
+            "missing": 6,
+            "eligible": 668
+          }
+        },
+        "stress": {
+          "sample_count": 48,
+          "valid_json_rate": 0.9791666666666666,
+          "valid_schema_rate": 0.9166666666666666,
+          "exact_match": 0.1875,
+          "field_accuracy": {
+            "company_name": 0.7708333333333334,
+            "revenue": 0.5833333333333334,
+            "net_profit": 0.5833333333333334,
+            "risks": 0.4166666666666667,
+            "operating_changes": 0.4583333333333333,
+            "key_metrics": 0.4791666666666667
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 110,
+              "fp": 124,
+              "fn": 64,
+              "precision": 0.4700854700854701,
+              "recall": 0.632183908045977,
+              "f1": 0.5392156862745098
+            },
+            "risks": {
+              "tp": 28,
+              "fp": 51,
+              "fn": 22,
+              "precision": 0.35443037974683544,
+              "recall": 0.56,
+              "f1": 0.43410852713178294
+            },
+            "operating_changes": {
+              "tp": 33,
+              "fp": 46,
+              "fn": 26,
+              "precision": 0.4177215189873418,
+              "recall": 0.559322033898305,
+              "f1": 0.4782608695652174
+            },
+            "key_metrics": {
+              "tp": 49,
+              "fp": 27,
+              "fn": 16,
+              "precision": 0.6447368421052632,
+              "recall": 0.7538461538461538,
+              "f1": 0.6950354609929078
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 52,
+              "eligible": 76,
+              "accuracy": 0.6842105263157895
+            },
+            "revenue": {
+              "correct": 26,
+              "eligible": 36,
+              "accuracy": 0.7222222222222222
+            },
+            "net_profit": {
+              "correct": 26,
+              "eligible": 40,
+              "accuracy": 0.65
+            }
+          },
+          "hallucination": {
+            "rate": 0.6170212765957447,
+            "hallucinated": 29,
+            "eligible": 47,
+            "invalid_schema_excluded": 14
+          },
+          "missing": {
+            "rate": 0.04405286343612335,
+            "missing": 10,
+            "eligible": 227
+          }
+        }
+      }
+    },
+    "r8-n512": {
+      "training": {
+        "model": "Qwen/Qwen2.5-0.5B-Instruct",
+        "model_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "requested_revision": "7ae557604adf67be50417f59c2c2f167def9a775",
+        "prompt_version": "finance-extraction-v2",
+        "data_file": "data\\synthetic-v1\\train.jsonl",
+        "sample_prefix_sha256": "748416e6b81b260fd6770a4cd20866ad3f8d337d4115fa847ea163562877f0bb",
+        "rank": 8,
+        "lora_alpha": 16,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj",
+          "gate_proj",
+          "up_proj",
+          "down_proj"
+        ],
+        "size": 512,
+        "seed": 42,
+        "steps": 64,
+        "warmup_steps": 6,
+        "batch_size": 2,
+        "gradient_accumulation": 4,
+        "effective_batch_size": 8,
+        "training_example_draws": 512,
+        "unique_training_examples_seen": 512,
+        "max_length": 1024,
+        "max_observed_length": 441,
+        "learning_rate": 0.0002,
+        "gradient_checkpointing": false,
+        "trainable_parameters": 4399104,
+        "total_parameters": 498431872,
+        "train_seconds": 59.53652710001916,
+        "train_tokens": 190244,
+        "supervised_tokens": 42599,
+        "peak_gpu_memory_mib": 3613.27978515625,
+        "peak_gpu_reserved_mib": 5716.0,
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+        "dtype": "bfloat16",
+        "loss_per_update": [
+          0.17509623850424458,
+          0.16779576560665418,
+          0.15322718833809468,
+          0.16476548306986663,
+          0.12383664076794829,
+          0.06059105050359241,
+          0.052325267474337536,
+          0.04958506820702816,
+          0.041130342247629334,
+          0.03617764660435864,
+          0.03072974508869159,
+          0.021457229187196395,
+          0.03305122889385322,
+          0.009619369678411527,
+          0.013788111069623162,
+          0.009912221412348553,
+          0.01493234603930586,
+          0.02191761647622416,
+          0.009021617538497426,
+          0.00861543775629519,
+          0.002354312247742479,
+          0.0030876995944686936,
+          0.004605593976010097,
+          0.002440492312113444,
+          0.001346277194387852,
+          0.0013668830590933105,
+          0.0015486775044195667,
+          0.0005265936696815222,
+          0.0009484250621018906,
+          0.0009210896785894785,
+          0.004564160392397926,
+          0.0007327398915929119,
+          0.0008213037236699328,
+          0.0008635612148227114,
+          0.0008380451064178909,
+          0.00035278142097177603,
+          0.0005872259152076297,
+          0.000304033784247235,
+          0.0011886963338562937,
+          0.0005314450241729594,
+          0.0017445283227188642,
+          0.00039378825902263435,
+          0.00025423465861637465,
+          0.0009194760909745109,
+          0.0004706283090965541,
+          0.000240096984350163,
+          0.0008329529003955605,
+          0.0005832051582566921,
+          0.0004958684916968818,
+          0.00045540241464491816,
+          0.0004354332298517574,
+          0.00027034224128443473,
+          0.0002860890046970264,
+          0.00029521193791392657,
+          0.0003312369853115538,
+          0.0008999101650981477,
+          0.0003680902023690998,
+          0.0003961542711901702,
+          0.0002685642224148007,
+          0.0002647530344816355,
+          0.0004518304262367933,
+          0.0003078096820711074,
+          0.00033010444441041744,
+          0.0003964452946170234
+        ],
+        "finished_at_utc": "2026-11-10T12:40:37.018672+00:00",
+        "versions": {
+          "torch": "2.13.0+cu130",
+          "transformers": "4.57.6",
+          "peft": "0.18.0"
+        }
+      },
+      "prediction_sha256": "1801219ad1f2eca3060ede3bb785ded59758702a941254a6d77dbc4715d13e87",
+      "inference": {
+        "wall_seconds": 102.42233720002696
+      },
+      "metrics": {
+        "test": {
+          "sample_count": 128,
+          "valid_json_rate": 0.9921875,
+          "valid_schema_rate": 0.9921875,
+          "exact_match": 0.9921875,
+          "field_accuracy": {
+            "company_name": 0.9921875,
+            "revenue": 0.9921875,
+            "net_profit": 0.9921875,
+            "risks": 0.9921875,
+            "operating_changes": 0.9921875,
+            "key_metrics": 0.9921875
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 509,
+              "fp": 0,
+              "fn": 5,
+              "precision": 1.0,
+              "recall": 0.9902723735408561,
+              "f1": 0.9951124144672532
+            },
+            "risks": {
+              "tp": 147,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.9865771812080537,
+              "f1": 0.9932432432432432
+            },
+            "operating_changes": {
+              "tp": 145,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.9863945578231292,
+              "f1": 0.9931506849315068
+            },
+            "key_metrics": {
+              "tp": 217,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.9954128440366973,
+              "f1": 0.9977011494252873
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 228,
+              "eligible": 230,
+              "accuracy": 0.991304347826087
+            },
+            "revenue": {
+              "correct": 112,
+              "eligible": 113,
+              "accuracy": 0.9911504424778761
+            },
+            "net_profit": {
+              "correct": 116,
+              "eligible": 117,
+              "accuracy": 0.9914529914529915
+            }
+          },
+          "hallucination": {
+            "rate": 0.0,
+            "hallucinated": 0,
+            "eligible": 100,
+            "invalid_schema_excluded": 0
+          },
+          "missing": {
+            "rate": 0.008982035928143712,
+            "missing": 6,
+            "eligible": 668
+          }
+        },
+        "stress": {
+          "sample_count": 48,
+          "valid_json_rate": 1.0,
+          "valid_schema_rate": 0.8958333333333334,
+          "exact_match": 0.08333333333333333,
+          "field_accuracy": {
+            "company_name": 0.7083333333333334,
+            "revenue": 0.5625,
+            "net_profit": 0.5416666666666666,
+            "risks": 0.3958333333333333,
+            "operating_changes": 0.3958333333333333,
+            "key_metrics": 0.4166666666666667
+          },
+          "list_micro_f1": {
+            "overall": {
+              "tp": 101,
+              "fp": 131,
+              "fn": 73,
+              "precision": 0.4353448275862069,
+              "recall": 0.5804597701149425,
+              "f1": 0.4975369458128079
+            },
+            "risks": {
+              "tp": 30,
+              "fp": 48,
+              "fn": 20,
+              "precision": 0.38461538461538464,
+              "recall": 0.6,
+              "f1": 0.46875
+            },
+            "operating_changes": {
+              "tp": 29,
+              "fp": 46,
+              "fn": 30,
+              "precision": 0.38666666666666666,
+              "recall": 0.4915254237288136,
+              "f1": 0.43283582089552236
+            },
+            "key_metrics": {
+              "tp": 42,
+              "fp": 37,
+              "fn": 23,
+              "precision": 0.5316455696202531,
+              "recall": 0.6461538461538462,
+              "f1": 0.5833333333333334
+            }
+          },
+          "numeric_amount_accuracy": {
+            "overall": {
+              "correct": 47,
+              "eligible": 76,
+              "accuracy": 0.618421052631579
+            },
+            "revenue": {
+              "correct": 24,
+              "eligible": 36,
+              "accuracy": 0.6666666666666666
+            },
+            "net_profit": {
+              "correct": 23,
+              "eligible": 40,
+              "accuracy": 0.575
+            }
+          },
+          "hallucination": {
+            "rate": 0.66,
+            "hallucinated": 33,
+            "eligible": 50,
+            "invalid_schema_excluded": 11
+          },
+          "missing": {
+            "rate": 0.0881057268722467,
+            "missing": 20,
+            "eligible": 227
+          }
+        }
+      }
+    }
+  }
+}

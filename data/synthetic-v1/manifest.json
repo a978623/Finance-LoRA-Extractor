@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "seed": 2026,
+  "synthetic": true,
+  "train_prefix_sizes": [
+    128,
+    512,
+    1024
+  ],
+  "splits": {
+    "train": {
+      "file": "train.jsonl",
+      "count": 1024,
+      "sha256": "55a24cbe9b266b87a2a9078bbe65d685a44c00d0a63e7b8b84617546f0049da6",
+      "template_ids": [
+        "brief",
+        "narrative",
+        "numbered",
+        "table"
+      ]
+    },
+    "validation": {
+      "file": "validation.jsonl",
+      "count": 64,
+      "sha256": "f7f9a943ade9714c8c9ea84fba7de4bad16e4718158a0b027bb21530d3a8a306",
+      "template_ids": [
+        "brief",
+        "narrative",
+        "numbered",
+        "table"
+      ]
+    },
+    "test": {
+      "file": "test.jsonl",
+      "count": 128,
+      "sha256": "ba0fc93c3e75ff25438f4f5aa6665a8979433d71fdbf34c92f0ff7ac31fa6b73",
+      "template_ids": [
+        "brief",
+        "narrative",
+        "numbered",
+        "table"
+      ]
+    },
+    "stress": {
+      "file": "stress.jsonl",
+      "count": 48,
+      "sha256": "93b23c868103fcaaf16c47d73eddc10290df0008e18ffb1efbc611c2ccac614b",
+      "template_ids": [
+        "anonymous_note",
+        "corrected_notice",
+        "loss_written_in_words",
+        "meeting_dialogue",
+        "peer_comparison",
+        "prior_values_only"
+      ]
+    }
+  }
+}

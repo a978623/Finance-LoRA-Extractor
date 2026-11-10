@@ -1,0 +1,4 @@
+# Install a CUDA-enabled PyTorch build separately when training on an NVIDIA GPU.
+transformers==4.57.6
+peft==0.18.0
+accelerate==1.12.0
